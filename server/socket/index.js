@@ -15,16 +15,13 @@ const authHandler = async (socket, next) => {
     if (authType !== 'Bearer' || !tokenValue) {
       return next(new Error('no token'));
     }
-
     const { secret } = keys.jwt;
     const payload = jwt.verify(tokenValue, secret);
     const id = payload.id.toString();
     const user = await User.findById(id);
-
     if (!user) {
       return next(new Error('no user found'));
     }
-
     const u = {
       id,
       role: user?.role,
@@ -33,7 +30,6 @@ const authHandler = async (socket, next) => {
       socketId: socket.id,
       messages: []
     };
-
     const existingUser = support.findUserById(id);
     if (!existingUser) {
       support.users.push(u);
@@ -43,7 +39,6 @@ const authHandler = async (socket, next) => {
   } else {
     return next(new Error('no token'));
   }
-
   next();
 };
 
