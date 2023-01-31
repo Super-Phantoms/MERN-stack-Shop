@@ -10,7 +10,6 @@ exports.disableProducts = products => {
       }
     };
   });
-
   Product.bulkWrite(bulkOptions);
 };
 
@@ -39,13 +38,11 @@ exports.caculateTaxAmount = order => {
             order.totalTax += item.totalTax;
           }
         }
-
         item.priceWithTax = parseFloat(
           Number((item.totalPrice + item.totalTax).toFixed(2))
         );
       });
     }
-
     const hasCancelledItems = order.products.filter(
       item => item.status === 'Cancelled'
     );
@@ -53,7 +50,6 @@ exports.caculateTaxAmount = order => {
     if (hasCancelledItems.length > 0) {
       order.total = this.caculateOrderTotal(order);
     }
-
     const currentTotal = this.caculateOrderTotal(order);
 
     if (currentTotal !== order.total) {
@@ -83,7 +79,6 @@ exports.caculateOrderTotal = order => {
 // calculate order tax amount
 exports.caculateItemsSalesTax = items => {
   const taxRate = taxConfig.stateTaxRate;
-
   const products = items.map(item => {
     item.priceWithTax = 0;
     item.totalPrice = 0;
@@ -118,7 +113,6 @@ exports.formatOrders = orders => {
       products: order?.cart?.products
     };
   });
-
   return newOrders.map(order => {
     return order?.products ? this.caculateTaxAmount(order) : order;
   });

@@ -9,7 +9,6 @@ exports.getStoreProductsQuery = (min, max, rating) => {
   const ratingFilter = rating
     ? { rating: { $gte: rating } }
     : { rating: { $gte: rating } };
-
   const matchQuery = {
     isActive: true,
     price: priceFilter.price,
@@ -107,6 +106,5 @@ exports.getStoreProductsWishListQuery = userId => {
       }
     }
   ];
-
   return wishListQuery;
 };
