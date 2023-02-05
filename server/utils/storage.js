@@ -26,5 +26,6 @@ exports.s3Upload = async image => {
     imageUrl = s3Upload.Location;
     imageKey = s3Upload.key;
   }
+
   return { imageUrl, imageKey };
 };

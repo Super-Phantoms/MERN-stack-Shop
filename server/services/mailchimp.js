@@ -26,6 +26,3 @@ exports.subscribeToNewsletter = async email => {
     return error;
   }
 };
-
-
-

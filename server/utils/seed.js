@@ -12,7 +12,9 @@ const password = args[1];
 const seedDB = async () => {
   try {
     console.log(`${chalk.blue('✓')} ${chalk.blue('seed db started')}`);
+
     if (!email || !password) throw new Error('missing arguments');
+
     const user = new User({
       email,
       password,
@@ -40,6 +42,7 @@ const seedDB = async () => {
     return null;
   }
 };
+
 (async () => {
   await setupDB().then(async () => {
     await seedDB();

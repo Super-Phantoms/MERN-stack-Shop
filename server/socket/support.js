@@ -12,9 +12,15 @@ const updatedUserStatus = (user, status) => {
     existingUser.online = status;
   }
 };
+
 exports.supportHandler = (io, socket) => {
   socket.on('connectUser', async () => {
     const user = findUserBySocketId(socket.id);
+
+    /* 
+      if user connected is admin => notify everyone
+      if user connected is not admin => notify all admins
+    */
     if (user) {
       user.online = true;
       if (user.isAdmin) {
@@ -29,6 +35,7 @@ exports.supportHandler = (io, socket) => {
       }
     }
   });
+
   socket.on('getUsers', async () => {
     const user = findUserBySocketId(socket.id);
     const notMe = users.filter(x => x.socketId !== socket.id);
